@@ -11,7 +11,9 @@ This repo does not contain model weights. It expects the NVFP4 checkpoint at:
 ## Verified Live Settings
 
 ```text
-base image: lmsysorg/sglang:dev-cu13-minimax-m3
+base image tag used live: lmsysorg/sglang:dev-cu13-minimax-m3
+base image digest pinned here: lmsysorg/sglang@sha256:a081e28f8d6368de246ae66459efbc6f94ea20ffa15fe3f3ce6b0820e9b58eea
+live image id: sha256:7271b6b9feb96bf8f6705ed5e9760919857bd19b01f47fd23ecffbf2a44c6517
 served model id: minimax-m3
 model display/name: MiniMax-M3
 port: 8000
@@ -94,4 +96,3 @@ Expected model list:
 - Do not add `--disable-cuda-graphs`.
 - Do not add `--enforce-eager`.
 - Keep power caps external to this repo. The validated host used 275W caps on all four GPUs.
-
