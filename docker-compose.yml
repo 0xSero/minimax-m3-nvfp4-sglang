@@ -1,0 +1,56 @@
+services:
+  minimax-m3:
+    build: .
+    image: minimax-m3-sglang:dev-cu13-minimax-m3-patched
+    container_name: minimax-m3-sglang
+    network_mode: host
+    ipc: host
+    gpus: all
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    environment:
+      PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+    volumes:
+      - /mnt/llm_models:/mnt/llm_models:ro
+    command:
+      - --model-path
+      - /mnt/llm_models/MiniMax-M3-NVFP4
+      - --tokenizer-path
+      - /mnt/llm_models/MiniMax-M3-NVFP4
+      - --trust-remote-code
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+      - --served-model-name
+      - minimax-m3
+      - --tp-size
+      - "4"
+      - --context-length
+      - "450000"
+      - --max-total-tokens
+      - "450000"
+      - --kv-cache-dtype
+      - bfloat16
+      - --quantization
+      - modelopt_fp4
+      - --reasoning-parser
+      - minimax-m3
+      - --tool-call-parser
+      - minimax-m3
+      - --moe-runner-backend
+      - flashinfer_cutlass
+      - --cuda-graph-backend-decode
+      - full
+      - --cuda-graph-backend-prefill
+      - disabled
+      - --max-running-requests
+      - "4"
+      - --chunked-prefill-size
+      - "4096"
+      - --max-prefill-tokens
+      - "16384"
+      - --mem-fraction-static
+      - "0.95"
+
